@@ -80,7 +80,7 @@ ___
 *Which file(s) were requested?*
 - **webdav/shell.php**
 
-![Shell.php](Images/webdav_shell-php.png)
+![Shell.php](Images/web-dav_shell-php.png)
 
 *What kind of alarm would you set to detect such access in the future?*
 
