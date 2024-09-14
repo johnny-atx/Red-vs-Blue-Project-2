@@ -1,4 +1,4 @@
-## Week 20 - Activity 2 - Incident Analysis with Kibana
+## Incident Analysis with Kibana
 ____
 ### 1. Identify the traffic between your machine and the web machine:  
 
