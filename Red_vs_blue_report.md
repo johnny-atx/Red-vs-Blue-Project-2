@@ -1,6 +1,6 @@
 ## Incident Analysis with Kibana
 ____
-### 1. Identify the traffic between your machine and the web machine:  
+### 1. Identify the traffic between attacker machine and the web app VM's:  
 
 *When did the interaction occur?*
    
@@ -21,7 +21,7 @@ ____
 ![Auth Failure](Images/401_auth_failures.png)
 ___
 
-### 2. Find the request for the hidden directory.  In your attack, you found a secret folder:
+### 2. Find the request for the hidden directory.  In the attack, a secret folder was found:
 
 *How many requests were made to this directory? At what time and from which IP address(es)?* 
 - **38,829 hits to this url May 3, 2022 @ 00:00 from 192.168.1.90.**
@@ -33,7 +33,7 @@ ___
 
 ![Directories](Images/folders_accessed.png) 
 
-*What kind of alarm would you set to detect this behavior in the future?*
+*What kind of alarm could be set to detect this behavior in the future?*
 
  - Set an alert for a brute force attack after monitoring a baseline.
  
@@ -47,22 +47,22 @@ ___
 
 ___ 
 
-### 3. After identifying the hidden directory, you used Hydra to brute-force the target server. 
+### 3. After identifying the hidden directory, Hydra was used to brute-force the target server. 
 
   *Can you identify packets specifically from Hydra?*
-  -  **Yes. user_agent.original: `"Mozilla/4.0 (Hydra)"`** 
+  -  **user_agent.original: `"Mozilla/4.0 (Hydra)"`** 
 
   ![Hydra](Images/user-agent_moz-hydra.png)
 
 *How many requests were made in the brute-force attack?*
 -  **290,804**
 	
-*How many requests had the attacker made after discovering the correct password in this one?* 
+*How many requests had the attacker machine made after discovering the correct password in this one?* 
 - **5**
 
 ![Secret Folder Requests](Images/times_secret_folder_requested.png)
 
-*What kind of alarm would you set to detect this behavior in the future and at what threshold(s)?*
+*What kind of alarm could be set to detect this behavior in the future and at what threshold(s)?*
 - **I would recommend setting an alert based on a specific threshold of 5 HTTP-GET requests from the same ip address to the same resource that generates a 401 status code.** 
 - **Also, setting an alert when the User-Agent includes the term “Hydra.”**
 
@@ -70,7 +70,7 @@ ___
 
 - **Implement account lock-out after 5 failed attempts at accessing the webserver.**
 ___
-### 4. Find the WebDav connection and use your dashboard to answer the following questions:
+### 4. Found the WebDav connection and used dashboard to answer:
 
 *How many requests were made to this directory?*
 - **223,755**
@@ -82,7 +82,7 @@ ___
 
 ![Shell.php](Images/web-dav_shell-php.png)
 
-*What kind of alarm would you set to detect such access in the future?*
+*What kind of alarm could be set to detect such access in the future?*
 
 - **Alert if anyone other than those whitelisted access this folder.**
 
@@ -93,14 +93,14 @@ ___
 - **Implement a firewall rule to make this folder accessible by those whitelisted.**
 ___
 ### 5.	Identify the reverse shell and meterpreter traffic.
-To finish off the attack, you uploaded a PHP reverse shell and started a meterpreter shell session. Answer the following questions:
+To finish off the attack, I uploaded a PHP reverse shell and started a meterpreter shell session:
 
 *Can you identify traffic from the meterpreter session?*
 - **Searching source port under “Available fields” I see that 4444 was at the top of the list and had a 78.8% usage. Then filtered by this to investigate it further.**
 ![Meterpreter Port](Images/top_source_port.png)
 ![Meterpreter Hits](Images/port4444-hits.png)
 
-*What kinds of alarms would you set to detect this behavior in the future?*
+*What kinds of alarms can be set to detect this behavior in the future?*
 
 - **An alarm if this port is used**
 - **An alarm if an executable file is uploaded**
